@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../model/Category';
 import { MatTableDataSource } from '@angular/material/table';
+import { CategoryService } from '../category.service';
 
 
 @Component({
@@ -13,10 +14,14 @@ export class CategoryListComponent implements OnInit {
   dataSource = new MatTableDataSource<Category>();
   displayedColumns: string[] = ['id', 'name', 'action'];
 
-  constructor(){}
+  constructor(
+    private categoryService: CategoryService
+  ){}
 
   ngOnInit(): void {
-      
+      this.categoryService.getCategories().subscribe(
+        categories => this.dataSource.data = categories
+      );
   }
 
 }
